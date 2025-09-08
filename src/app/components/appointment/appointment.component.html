@@ -1,0 +1,46 @@
+<section class="appointments">
+  <h2>Book Appointment</h2>
+
+  <form *ngIf="!bookingConfirmed" (ngSubmit)="bookAppointment()">
+    <input type="text" placeholder="Patient Name" [(ngModel)]="appointmentData.patientName" name="patientName" required />
+    <input type="number" placeholder="Age" [(ngModel)]="appointmentData.age" name="age" required />
+    <select [(ngModel)]="appointmentData.sex" name="sex" required>
+      <option value="">Select Sex</option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select>
+
+    <select [(ngModel)]="appointmentData.department" name="department" (change)="onDepartmentChange()" required>
+      <option value="">Select Department</option>
+      <option *ngFor="let dept of departments">{{ dept }}</option>
+    </select>
+
+    <select [(ngModel)]="appointmentData.doctor" name="doctor" required>
+      <option value="">Select Doctor</option>
+      <option *ngFor="let doc of availableDoctors">{{ doc }}</option>
+    </select>
+
+    <select [(ngModel)]="appointmentData.day" name="day" required>
+      <option value="">Select Day</option>
+      <option *ngFor="let d of days">{{ d }}</option>
+    </select>
+
+    <select [(ngModel)]="appointmentData.time" name="time" required>
+      <option value="">Select Time</option>
+      <option *ngFor="let t of times">{{ t }}</option>
+    </select>
+
+    <button type="submit">Book Appointment</button>
+  </form>
+
+  <div *ngIf="bookingConfirmed" class="confirmation">
+    <h3>Appointment Confirmed!</h3>
+    <p>Patient: {{ appointmentData.patientName }}</p>
+    <p>Age: {{ appointmentData.age }}, Sex: {{ appointmentData.sex }}</p>
+    <p>Department: {{ appointmentData.department }}</p>
+    <p>Doctor: {{ appointmentData.doctor }}</p>
+    <p>Day: {{ appointmentData.day }}, Time: {{ appointmentData.time }}</p>
+    <button (click)="resetForm()">Book Another Appointment</button>
+  </div>
+</section>

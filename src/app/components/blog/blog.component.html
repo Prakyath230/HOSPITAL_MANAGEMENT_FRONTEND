@@ -1,0 +1,22 @@
+<section class="blog-section">
+  <h2>📝 Our Blog</h2>
+  <div class="blog-grid">
+    <div class="blog-card" *ngFor="let post of blogs; let i = index">
+      <img [src]="post.image" [alt]="post.title" class="blog-image"/>
+      <div class="blog-content">
+        <h3>{{ post.title }}</h3>
+        <p class="blog-meta">By {{ post.author }} | {{ post.date }}</p>
+        <p>{{ post.summary }}</p>
+
+        <!-- Expanded text -->
+        <div *ngIf="expandedIndex === i" class="blog-extra">
+          <p>{{ post.fullText }}</p>
+        </div>
+
+        <button class="cta-button" (click)="toggleExpand(i)">
+          {{ expandedIndex === i ? 'Show Less' : 'Read More' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

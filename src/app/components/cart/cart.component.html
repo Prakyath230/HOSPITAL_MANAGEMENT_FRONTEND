@@ -1,0 +1,55 @@
+<div class="cart-wrap" *ngIf="items.length; else empty">
+  <h2>Your Cart</h2>
+
+  <table class="cart">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let it of items">
+        <td class="item">
+          <img [src]="it.image" alt="{{ it.name }}" />
+          <div class="name">{{ it.name }}</div>
+        </td>
+        <td>₹{{ it.price }}</td>
+        <td class="qty">
+          <button type="button" (click)="dec(it)">−</button>
+          <input
+            type="number"
+            min="1"
+            [ngModel]="it.qty"
+            (ngModelChange)="cartService.setQty(it.id, $event)"
+          />
+          <button type="button" (click)="inc(it)">+</button>
+        </td>
+        <td>₹{{ it.price * it.qty }}</td>
+        <td>
+          <button type="button" class="link" (click)="remove(it)">Remove</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="summary">
+    <div class="total">Total: ₹{{ total }}</div>
+    <div class="actions">
+      <a routerLink="/medicine">← Continue shopping</a>
+      <button type="button" (click)="buyNow()">Buy Now</button>
+      <button type="button" class="muted" (click)="clear()">Clear Cart</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #empty>
+  <div class="empty">
+    <p>Your cart is empty.</p>
+    <a routerLink="/medicine">Go to medicines</a>
+  </div>
+</ng-template>

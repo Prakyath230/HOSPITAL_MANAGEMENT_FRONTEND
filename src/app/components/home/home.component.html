@@ -1,0 +1,61 @@
+<!-- Main Content -->
+  <div class="main-content">
+    <header class="header-section">
+      <h1>🏥 {{ hospitalName }}</h1>
+      <p>👨‍⚕ {{ welcomeMessage }}</p>
+      <button class="cta-button pulse" (click)="scrollToServices()">Explore Services</button>
+    </header>
+
+    <section class="announcement-box">
+      <h2>📢 Latest Announcements</h2>
+      <p>{{ currentAnnouncement.text }}</p>
+      <button *ngIf="announcements.length > 1" class="cta-button" (click)="nextAnnouncement()">Next</button>
+    </section>
+
+    <section class="cards-section" id="services">
+  <h2>✨ Hospital Highlights</h2>
+  <div class="cards-wrapper">
+    <div class="highlight-card" *ngFor="let item of highlights; let i = index"
+         [@cardAnimation] [style.animationDelay]="i * 0.2 + 's'">
+      <img [src]="item.image" [alt]="item.title" class="card-image"/>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.description }}</p>
+      <button class="card-button" (click)="learnMore(item.title)">{{ item.buttonText }}</button>
+    </div>
+  </div>
+</section>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>📞 Contact</h3>
+          <p><strong>Phone:</strong> +91-123-456-7890</p>
+          <p><strong>Email:</strong> info&#64;medcarehospital.com</p>
+          <p><strong>Address:</strong> 123 Health Lane, Mumbai, India</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>🔗 Navigation</h3>
+          <a routerLink="/about">About Us</a>
+          <a routerLink="/careers">Careers</a>
+          <a routerLink="/blog">Blog</a>
+        </div>
+
+        <div class="footer-section">
+          <h3>📬 Newsletter</h3>
+          <input type="email" [(ngModel)]="email" placeholder="Your Email" class="footer-input"/>
+          <button class="cta-button" (click)="subscribe()">Subscribe</button>
+        </div>
+
+        <div class="footer-section">
+          <h3>🌐 Follow Us</h3>
+          <div class="social-links">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <p class="copyright">© 2025 MedCare Hospital</p>
+    </footer>
+  </div>

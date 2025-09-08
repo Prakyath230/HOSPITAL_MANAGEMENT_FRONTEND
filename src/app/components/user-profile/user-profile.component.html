@@ -1,0 +1,45 @@
+<div class="user-profile-container">
+  <div class="user-profile-card">
+    <!-- Header -->
+    <div class="user-profile-header">
+      <img src="https://media.istockphoto.com/id/1364917563/photo/businessman-smiling-with-arms-crossed-on-white-background.webp?s=2048x2048&w=is&k=20&c=uEaEqFvI74GpTWzcRCiDMR3qWqS2qVzKQREVBgmcxao=">
+      <h2>{{ user.name }}</h2>
+      <p class="email">{{ user.email }}</p>
+    </div>
+
+    <!-- View Mode -->
+    <div class="user-profile-details" *ngIf="!editMode">
+      <p><strong>📞 Phone:</strong> {{ user.phone }}</p>
+      <p><strong>🎂 Age:</strong> {{ user.age }}</p>
+      <p><strong>⚧ Gender:</strong> {{ user.gender }}</p>
+      <button class="btn btn-edit" (click)="toggleEdit()">Edit Profile</button>
+    </div>
+
+    <!-- Edit Mode -->
+    <div class="user-profile-edit" *ngIf="editMode">
+      <label>Name</label>
+      <input type="text" [(ngModel)]="user.name">
+
+      <label>Email</label>
+      <input type="email" [(ngModel)]="user.email">
+
+      <label>Phone</label>
+      <input type="text" [(ngModel)]="user.phone">
+
+      <label>Age</label>
+      <input type="number" [(ngModel)]="user.age">
+
+      <label>Gender</label>
+      <select [(ngModel)]="user.gender">
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+
+      <div class="actions">
+        <button class="btn btn-save" (click)="saveProfile()">Save</button>
+        <button class="btn btn-cancel" (click)="toggleEdit()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

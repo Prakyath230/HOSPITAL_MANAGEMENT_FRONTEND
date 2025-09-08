@@ -1,0 +1,25 @@
+<section class="doctors fade-in">
+  <h2 class="section-title">Meet Our Expert Doctors</h2>
+  <p class="subtitle">Highly qualified and experienced professionals dedicated to your care</p>
+
+  <div class="doctor-search">
+    <input
+      type="text"
+      placeholder="Search by name or specialty..."
+      aria-label="Search doctors"
+      class="input-field"
+      [(ngModel)]="searchTerm"
+    />
+  </div>
+
+  <div class="doctors-grid">
+    <div class="doctor-card" *ngFor="let doctor of filteredDoctors">
+      <img [src]="doctor.image" [alt]="doctor.name" />
+      <h3>{{ doctor.name }}</h3>
+      <p><strong>Specialty:</strong> {{ doctor.specialty }}</p>
+      <p><strong>Email:</strong> {{ doctor.email }}</p>
+      <p><strong>Experience:</strong> {{ doctor.experience }}</p>
+      <p><strong>Feedback:</strong> {{ doctor.feedback }}</p>
+    </div>
+  </div>
+</section>

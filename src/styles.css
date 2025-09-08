@@ -1,0 +1,5 @@
+@import url(../node_modules/bootstrap/dist/css/bootstrap.min.css);
+router-outlet + * {
+  margin-left: 230px;
+  display: block;
+}

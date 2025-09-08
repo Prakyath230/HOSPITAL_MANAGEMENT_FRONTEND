@@ -1,0 +1,33 @@
+<div class="sidebar-container">
+  <nav class="sidebar">
+    <!-- Header -->
+    <div class="text-center">
+      <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" alt="Hospital Icon">
+      <h4>MedCare</h4>
+    </div>
+
+    <!-- Links -->
+    <div class="nav-links">
+      <a class="nav-link" routerLink="/home">🏠 Home</a>
+      <a class="nav-link" routerLink="/medicine">💊 QuickMeds</a>
+      <a class="nav-link" routerLink="/appointment">📅 Appointment</a>
+      <a class="nav-link" routerLink="/doctor-user">🧑‍⚕️ Doctor</a>
+      <a class="nav-link" routerLink="/about">ℹ️ About Us</a>
+      <a class="nav-link" routerLink="/careers">💼 Careers</a>
+      <a class="nav-link" routerLink="/blog">📝 Blog</a>
+
+      <!-- User Profile -->
+      <a routerLink="/user-profile" routerLinkActive="active" class="user-profile">
+        <img src="https://media.istockphoto.com/id/1364917563/photo/businessman-smiling-with-arms-crossed-on-white-background.webp" alt="User Avatar">
+        <div class="user-info">
+          <h5>John Doe</h5>
+        </div>
+      </a>
+
+      <!-- Logout -->
+      <div class="logout-btn">
+        <a href="#" (click)="logout()">🔒 Logout</a>
+      </div>
+    </div>
+  </nav>
+</div>

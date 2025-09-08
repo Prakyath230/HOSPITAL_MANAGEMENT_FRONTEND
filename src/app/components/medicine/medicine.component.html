@@ -1,0 +1,38 @@
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <span class="logo">💊 MedCart</span>
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      placeholder="Search medicine..." 
+      class="search-input">
+  </div>
+
+  <div class="navbar-right">
+    <button class="go-cart-btn" (click)="goCart()" [disabled]="cartCount === 0">
+      Go to Cart
+    </button>
+  </div>
+</nav>
+
+<!-- Medicine Cards -->
+<div class="cards-container">
+  <div class="card" *ngFor="let med of filteredMedicines">
+    <img [src]="med.image" [alt]="med.name">
+
+    <h3>{{ med.name }}</h3>
+    <p class="desc">{{ med.description }}</p>
+    <p class="price">Price: ₹{{ med.price }}</p>
+    <p class="rating">Rating: {{ med.rating }} ⭐</p>
+
+    <div class="button-group">
+      <button class="add-btn" (click)="add(med)">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- Snackbar -->
+<div id="snackbar" class="snackbar" [class.show]="showMsg">
+  {{ message }}
+</div>

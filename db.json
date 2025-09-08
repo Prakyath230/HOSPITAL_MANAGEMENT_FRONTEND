@@ -1,0 +1,39 @@
+{
+  "appointments": [
+    {
+      "id": "1",
+      "fullName": "Aarav Mehta",
+      "email": "aarav.mehta@example.com",
+      "date": "2025-07-20",
+      "department": "Cardiology"
+    },
+    {
+      "id": "2",
+      "fullName": "Diya Kapoor",
+      "email": "diya.kapoor@example.com",
+      "date": "2025-07-22",
+      "department": "Neurology"
+    },
+    {
+      "id": "3",
+      "fullName": "Rohan Verma",
+      "email": "rohan.verma@example.com",
+      "date": "2025-07-25",
+      "department": "Pediatrics"
+    },
+    {
+      "id": "4",
+      "fullName": "Sneha Reddy",
+      "email": "sneha.reddy@example.com",
+      "date": "2025-07-28",
+      "department": "Orthopedics"
+    },
+    {
+      "id": "5",
+      "fullName": "Kunal Deshmukh",
+      "email": "kunal.deshmukh@example.com",
+      "date": "2025-08-01",
+      "department": "General Medicine"
+    }
+  ]
+}

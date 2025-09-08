@@ -1,0 +1,150 @@
+.user-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+.user-profile-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 450px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.user-profile-card:hover {
+  transform: translateY(-5px);
+}
+
+.user-profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-profile-header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #4a90e2;
+}
+
+.user-profile-header h2 {
+  font-size: 1.6rem;
+  margin: 0;
+  color: #333;
+}
+
+.user-profile-header .email {
+  font-size: 0.95rem;
+  color: #777;
+}
+
+.user-profile-details p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+.user-profile-edit label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  color: #333;
+}
+
+.user-profile-edit input,
+.user-profile-edit select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border 0.2s;
+}
+
+.user-profile-edit input:focus,
+.user-profile-edit select:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-edit {
+  background: #4a90e2;
+  color: #fff;
+}
+
+.btn-save {
+  background: #28a745;
+  color: #fff;
+}
+
+.btn-cancel {
+  background: #dc3545;
+  color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.reports-section {
+  margin-top: 30px;
+}
+
+.reports-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #222;
+}
+
+.reports-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.reports-section li {
+  margin-bottom: 12px;
+  padding: 10px;
+  background: #f1f5fb;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.view-link:hover {
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .user-profile-card {
+    width: 100%;
+    padding: 20px;
+  }
+}

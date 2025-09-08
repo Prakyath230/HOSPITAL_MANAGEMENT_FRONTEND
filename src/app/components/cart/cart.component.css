@@ -1,0 +1,235 @@
+/* ============================
+   Cart Container
+============================ */
+.cart-wrap {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  border: 1px solid #f0f0f0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* ============================
+   Table
+============================ */
+.cart {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cart th {
+  background: #f8fafc;
+  text-align: left;
+  padding: 16px 18px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #222;
+  letter-spacing: 0.3px;
+}
+
+.cart td {
+  padding: 16px 18px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.92rem;
+  color: #333;
+  vertical-align: middle;
+}
+
+/* Alternate row background + hover */
+.cart tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.cart tr:hover {
+  background: #f1f8f7;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* ============================
+   Item Details
+============================ */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.item img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  background: #fafafa;
+  transition: transform 0.2s;
+}
+
+.item img:hover {
+  transform: scale(1.05);
+}
+
+.item .name {
+  font-weight: 600;
+  color: #111;
+  font-size: 1rem;
+}
+
+/* ============================
+   Quantity Controls
+============================ */
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qty button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.qty button:hover {
+  background: #e9ecef;
+  border-color: #bbb;
+}
+
+.qty input {
+  width: 60px;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.92rem;
+}
+
+/* ============================
+   Summary Section
+============================ */
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  margin-top: 28px;
+  border-top: 2px solid #eee;
+}
+
+.total {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #00796b;
+  letter-spacing: 0.5px;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* ============================
+   Buttons
+============================ */
+button {
+  padding: 12px 22px;
+  border-radius: 9999px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: #f8f9fa;
+  transition: all 0.25s ease;
+  font-weight: 500;
+}
+
+button:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+button.primary {
+  background: linear-gradient(135deg, #00796b, #009688);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+button.primary:hover {
+  background: linear-gradient(135deg, #00665a, #008577);
+  transform: translateY(-2px);
+}
+
+button.muted {
+  background: #f1f3f5;
+  color: #444;
+}
+
+button.link {
+  background: transparent;
+  border: none;
+  color: #d63031;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+button.link:hover {
+  text-decoration: underline;
+}
+
+/* ============================
+   Empty Cart
+============================ */
+.empty {
+  max-width: 600px;
+  margin: 100px auto;
+  text-align: center;
+  padding: 48px;
+  background: #f9fbfc;
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  border: 2px dashed #ddd;
+}
+
+.empty p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* ============================
+   Responsive
+============================ */
+@media (max-width: 768px) {
+  .cart-wrap {
+    padding: 20px;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
