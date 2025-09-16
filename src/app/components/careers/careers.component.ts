@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 interface Job {
   title: string;
@@ -12,7 +13,7 @@ interface Job {
 @Component({
   selector: 'app-careers',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './careers.component.html',
   styleUrls: ['./careers.component.css']
 })

@@ -15,13 +15,6 @@
       <input type="text" placeholder="Name" [(ngModel)]="name" name="name" required />
       <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
       <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
-
-      <!-- Role selection -->
-      <select [(ngModel)]="role" name="role" required>
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-      </select>
-
       <button type="submit">Sign Up</button>
     </form>
   </div>
@@ -38,10 +31,8 @@
         <a href="#" class="social"><i class="fab fa-x-twitter"></i></a>
       </div>
 
-      <input type="email" placeholder="Email" [(ngModel)]="logEmail" name="logEmail" required />
+      <input type="text" placeholder="User Name" [(ngModel)]="logName" name="logName" required />
       <input type="password" placeholder="Password" [(ngModel)]="logPassword" name="logPassword" required />
-
-      <a href="#">Forgot your password?</a>
       <button type="submit">Sign In</button>
     </form>
   </div>

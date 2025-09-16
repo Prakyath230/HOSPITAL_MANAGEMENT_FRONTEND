@@ -82,6 +82,17 @@
 /* ============================
    Quantity Controls
 ============================ */
+.qty input[type=number]::-webkit-inner-spin-button,
+.qty input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.qty input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
 .qty {
   display: flex;
   align-items: center;

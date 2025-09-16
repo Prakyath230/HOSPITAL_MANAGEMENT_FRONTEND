@@ -1,58 +1,129 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { AppointmentService } from '../../services/appointment.service';
 
 @Component({
   selector: 'app-appointment',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './appointment.component.html',
   styleUrls: ['./appointment.component.css']
 })
 export class AppointmentComponent {
-  appointmentData = {
+
+  appointmentData: {
+    patientName: string;
+    age: number | null;
+    sex: string;
+    department: string;
+    doctorId: number | null;
+    day: string;
+    time: string;
+  } = {
     patientName: '',
-    age: '',
+    age: null,
     sex: '',
     department: '',
-    doctor: '',
+    doctorId: null,
     day: '',
     time: ''
   };
 
-  departments = ['Cardiology','Neurology','Orthopedics','Pediatrics','General Medicine'];
-  doctorsByDepartment: { [key: string]: string[] } = {
-    Cardiology: ['Dr. Ayesha Khan','Dr. Rohit Sharma'],
-    Neurology: ['Dr. Neha Desai','Dr. Anil Mehta'],
-    Orthopedics: ['Dr. Raj Verma','Dr. Arjun Reddy'],
-    Pediatrics: ['Dr. Meera Naik','Dr. Sneha Iyer'],
-    'General Medicine': ['Dr. Karishma Kapoor','Dr. Vi Sethi']
+  departments: string[] = [
+    'Cardiology',
+    'Neurology',
+    'Orthopedics',
+    'Pediatrics',
+    'General Medicine'
+  ];
+
+  doctorsByDepartment: { [key: string]: { id: number; name: string }[] } = {
+    Cardiology: [
+      { id: 1, name: 'Dr. Ayesha Khan' },
+      { id: 2, name: 'Dr. Rohit Sharma' }
+    ],
+    Neurology: [
+      { id: 3, name: 'Dr. Neha Desai' },
+      { id: 4, name: 'Dr. Anil Mehta' }
+    ],
+    Orthopedics: [
+      { id: 5, name: 'Dr. Raj Verma' },
+      { id: 6, name: 'Dr. Arjun Reddy' }
+    ],
+    Pediatrics: [
+      { id: 7, name: 'Dr. Meera Naik' },
+      { id: 8, name: 'Dr. Sneha Iyer' }
+    ],
+    'General Medicine': [
+      { id: 9, name: 'Dr. Karishma Kapoor' },
+      { id: 10, name: 'Dr. Vidhya Sethi' }
+    ]
   };
-  availableDoctors: string[] = [];
-  days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-  times = ['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+
+  availableDoctors: { id: number; name: string }[] = [];
+
+  days: string[] = [
+    'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'
+  ];
+
+  times: string[] = [
+    '08:00','09:00','10:00','11:00',
+    '12:00','13:00','14:00','15:00'
+  ];
 
   bookingConfirmed = false;
+  message = '';
 
-  onDepartmentChange() {
+  constructor(private appointmentService: AppointmentService) {}
+
+  onDepartmentChange(): void {
     this.availableDoctors = this.doctorsByDepartment[this.appointmentData.department] || [];
-    this.appointmentData.doctor = '';
+    this.appointmentData.doctorId = null;
   }
 
-  bookAppointment() {
-  const { patientName, age, sex, department, doctor, day, time } = this.appointmentData;
+  bookAppointment(): void {
+    const { patientName, age, sex, department, doctorId, day, time } = this.appointmentData;
+    if (!patientName || !age || !sex || !department || !doctorId || !day || !time) {
+      alert('Please fill all fields');
+      return;
+    }
 
-  if (!patientName || !age || !sex || !department || !doctor || !day || !time) {
-    alert('Please fill all the fields before booking the appointment.');
-    return;
+    const req = {
+      patientName,
+      age,
+      sex,
+      department,
+      doctorId,
+      day,
+      time
+    };
+
+    this.appointmentService.bookAppointment(req).subscribe({
+      next: (res: any) => {
+        this.bookingConfirmed = true;
+        this.message = res.message || 'Appointment booked successfully';
+      },
+      error: (err: any) => {
+        this.bookingConfirmed = false;
+        this.message = err.error?.message || 'Booking failed';
+      }
+    });
   }
-  this.bookingConfirmed = true;
-}
 
-
-  resetForm() {
-    this.appointmentData = { patientName: '', age: '', sex: '', department: '', doctor: '', day: '', time: '' };
+  resetForm(): void {
+    this.appointmentData = {
+      patientName: '',
+      age: null,
+      sex: '',
+      department: '',
+      doctorId: null,
+      day: '',
+      time: ''
+    };
     this.availableDoctors = [];
     this.bookingConfirmed = false;
+    this.message = '';
   }
 }

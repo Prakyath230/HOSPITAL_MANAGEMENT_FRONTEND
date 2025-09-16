@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,30 +8,18 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private usersKey = 'users';
   private sessionKey = 'sessionUser';
+  baseUrl: string = '/auth'
+
+  constructor(private http: HttpClient) { }
 
   // Register new user
-  register(user: any) {
-    let users = JSON.parse(localStorage.getItem(this.usersKey) || '[]');
-    if (users.some((u: any) => u.email === user.email)) {
-      return false;
-    }
-    users.push(user);
-    localStorage.setItem(this.usersKey, JSON.stringify(users));
-    return true;
+  register(user: any): Observable<any> {
+    return this.http.post(this.baseUrl + '/register', user)
   }
 
   // Login
-  login(email: string, password: string) {
-    let users = JSON.parse(localStorage.getItem(this.usersKey) || '[]');
-    const found = users.find((u: any) => u.email === email && u.password === password);
-    if (found) {
-      localStorage.setItem(this.sessionKey, JSON.stringify(found));
-      const token = Math.random().toString(36).substring(2);
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', found.role || 'user');
-      return true;
-    }
-    return false;
+  login(req: any): Observable<any> {
+    return this.http.post(this.baseUrl + '/login', req)
   }
 
   logout() {
@@ -38,24 +28,4 @@ export class AuthService {
     localStorage.removeItem('role');
   }
 
-  isLoggedIn() {
-    return !!localStorage.getItem(this.sessionKey) && !!localStorage.getItem('token');
-  }
-
-  getUser() {
-    const user = JSON.parse(localStorage.getItem(this.sessionKey) || 'null');
-    if (!user) return null;
-    const role = localStorage.getItem('role');
-    return { ...user, role };
-  }
-
-  isAdmin() {
-    const role = localStorage.getItem('role');
-    return role !== null && role.toLowerCase() === 'admin';
-  }
-
-  isUser() {
-    const role = localStorage.getItem('role');
-    return role !== null && role.toLowerCase() === 'user';
-  }
 }

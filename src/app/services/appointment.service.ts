@@ -1,55 +1,33 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-export interface Appointment {
-  id: number;
-  fullName: string;
-  age: number;
-  sex: string;
-  department: string;
-  doctor: string;
-  day: string;
-  time: string;
-}
-
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class AppointmentService {
-  private appointments: Appointment[] = [];
-  private appointments$ = new BehaviorSubject<Appointment[]>([]);
 
-  constructor() {
-    const saved = localStorage.getItem('appointments');
-    if (saved) {
-      this.appointments = JSON.parse(saved);
-      this.appointments$.next(this.appointments);
-    }
+  baseUrl: string = '/api/appointments';
+
+  constructor(private http: HttpClient) {}
+
+  bookAppointment(req:any): Observable<any> {
+    return this.http.post(this.baseUrl, req);
   }
 
-  getAppointments() {
-    return this.appointments$.asObservable();
+  getMyAppointment(): Observable<any> {
+    return this.http.get(this.baseUrl + '/details');
   }
 
-  createAppointment(app: Appointment) {
-    app.id = this.appointments.length ? Math.max(...this.appointments.map(a => a.id)) + 1 : 1;
-    this.appointments.push(app);
-    this.save();
+  getAllAppointments(): Observable<any> {
+    return this.http.get(this.baseUrl);
   }
 
-  updateAppointment(id: number, updated: Appointment) {
-    const index = this.appointments.findIndex(a => a.id === id);
-    if (index !== -1) {
-      this.appointments[index] = { ...updated, id };
-      this.save();
-    }
+  approveAppointment(id:number): Observable<any> {
+    return this.http.put(this.baseUrl + '/approve/' + id, {});
   }
 
-  deleteAppointment(id: number) {
-    this.appointments = this.appointments.filter(a => a.id !== id);
-    this.save();
-  }
-
-  private save() {
-    localStorage.setItem('appointments', JSON.stringify(this.appointments));
-    this.appointments$.next(this.appointments);
+  rejectAppointment(id:number): Observable<any> {
+    return this.http.put(this.baseUrl + '/reject/' + id, {});
   }
 }
