@@ -1,0 +1,20 @@
+<div class="profile-card">
+  <div class="profile-header">
+    <img [src]="profilePic" alt="Profile Picture">
+    <h2>{{ admin.name }}</h2>
+    <p>{{ admin.role }}</p>
+  </div>
+
+  <div class="profile-body">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="admin.name">
+
+    <label>Email</label>
+    <input type="email" [(ngModel)]="admin.email">
+
+    <label>Phone</label>
+    <input type="text" [(ngModel)]="admin.phone">
+
+    <button class="save-btn" (click)="saveProfile()">Save Profile</button>
+  </div>
+</div>

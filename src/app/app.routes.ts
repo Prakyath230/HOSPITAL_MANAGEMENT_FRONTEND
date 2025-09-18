@@ -8,8 +8,10 @@ import { CartComponent } from './components/cart/cart.component';
 import { DoctorUserComponent } from './components/doctor-user/doctor-user.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { BlogComponent } from './components/blog/blog.component';
-import { CareersComponent } from './components/careers/careers.component';
 import { TechnologyComponent } from './components/technology/technology.component';
+import { AppointmentsComponent } from './admin/appointments/appointments.component';
+import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
+import { AdminProfileComponent } from './admin/admin-profile/admin-profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,12 +22,21 @@ export const routes: Routes = [
   { path: 'appointment', component: AppointmentComponent },
   { path: 'about', component: AboutComponent },
   { path: 'blog', component: BlogComponent },
-  { path: 'careers', component: CareersComponent },
   { path: 'medicine', component: MedicineComponent },
   {path: 'cart', component: CartComponent},
   { path: 'doctor-user', component: DoctorUserComponent },
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'reports-technology', component: TechnologyComponent },
+  // Admin routes
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: [
+      { path: 'appointments', component: AppointmentsComponent },
+      { path: 'profile', component: AdminProfileComponent }
+    ]
+  },
+  
   { path: 'logout', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' }
 ];

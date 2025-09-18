@@ -1,37 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { CartService, CartItem } from '../../services/cart.service';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { Router } from '@angular/router'; // <-- import Router
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, NavbarComponent],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
   items: CartItem[] = [];
   total = 0;
 
-  constructor(public cartService: CartService) {
-    // subscribe to service streams
+  constructor(private cartService: CartService, private router: Router) {} // <-- inject Router
+
+  ngOnInit() {
     this.cartService.cart$.subscribe(items => this.items = items);
-    this.cartService.total$.subscribe(total => this.total = total);
+    this.cartService.total$Obs.subscribe(total => this.total = total);
   }
 
   inc(item: CartItem) {
-    this.cartService.setQty(item.id, item.qty + 1);
+    this.cartService.setQty(item.medicineId, item.qty + 1);
   }
 
   dec(item: CartItem) {
-    this.cartService.setQty(item.id, item.qty - 1);
+    this.cartService.setQty(item.medicineId, item.qty - 1);
   }
 
   remove(item: CartItem) {
-    this.cartService.remove(item.id);
+    this.cartService.remove(item.medicineId);
   }
 
   clear() {
@@ -43,6 +44,11 @@ export class CartComponent {
       alert('Your cart is empty.');
       return;
     }
-    alert(`You bought ${this.items.length} item(s) for a total of ₹${this.total}`);
+
+    const confirmPurchase = confirm(`You bought ${this.items.length} item(s) for a total of ₹${this.total}. Proceed?`);
+    if (confirmPurchase) {
+      this.cartService.clear();  // Clear cart
+      this.router.navigate(['/medicine']); // Navigate to medicine page
+    }
   }
 }

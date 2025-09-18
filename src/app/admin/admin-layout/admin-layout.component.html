@@ -1,0 +1,14 @@
+<div class="layout">
+  <nav class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+      <li><a routerLink="/admin/appointments" routerLinkActive="active">Appointments</a></li>
+      <li><a routerLink="/admin/profile" routerLinkActive="active">Admin Profile</a></li>
+      <li><a (click)="logout()">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

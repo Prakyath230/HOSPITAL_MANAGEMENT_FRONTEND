@@ -20,22 +20,20 @@ export class MedicineComponent implements OnInit {
   showMsg = false;
   message = '';
 
-  medicines: Medicine[] = [];
+  medicines: (Medicine & { qty: number })[] = [];
 
   constructor(
     private cart: CartService,
     private router: Router,
     private medicineService: MedicineService
   ) {
-    this.cart.count$.subscribe(c => this.cartCount = c);
+    this.cart.countObs$.subscribe(c => this.cartCount = c);
   }
 
   ngOnInit() {
-    // load medicines from API
     this.medicineService.getAll().subscribe(data => {
       this.medicines = data.map(m => ({
         ...m,
-        id: m.medicineId.toString(), // match CartService id:string
         qty: 1
       }));
     });
@@ -47,9 +45,9 @@ export class MedicineComponent implements OnInit {
     );
   }
 
-  add(m: any) {
-    this.cart.add({ id: m.id, name: m.name, price: m.price, image: m.image }, 1);
-    m.qty = this.getQty(m.id);
+  add(m: Medicine & { qty: number }) {
+    this.cart.add(m.medicineId, 1);
+    m.qty = this.getQty(m.medicineId);
     this.message = `${m.name} added to cart`;
     this.showSnackbar();
   }
@@ -59,25 +57,25 @@ export class MedicineComponent implements OnInit {
     setTimeout(() => this.showMsg = false, 2000);
   }
 
-  inc(m: any) {
-    this.cart.add({ id: m.id, name: m.name, price: m.price, image: m.image }, 1);
-    m.qty = this.getQty(m.id);
+  inc(m: Medicine & { qty: number }) {
+    this.cart.add(m.medicineId, 1);
+    m.qty = this.getQty(m.medicineId);
   }
 
-  dec(m: any) {
-    const q = this.getQty(m.id) - 1;
-    this.cart.setQty(m.id, q);
-    m.qty = this.getQty(m.id);
+  dec(m: Medicine & { qty: number }) {
+    const q = this.getQty(m.medicineId) - 1;
+    this.cart.setQty(m.medicineId, q);
+    m.qty = this.getQty(m.medicineId);
   }
 
   goCart() {
     this.router.navigate(['/cart']);
   }
 
-  private getQty(id: string): number {
+  private getQty(medicineId: number): number {
     let qty = 0;
     this.cart.cart$.subscribe(items => {
-      const it = items.find(x => x.id === id);
+      const it = items.find(x => x.medicineId === medicineId);
       qty = it ? it.qty : 0;
     }).unsubscribe();
     return qty;

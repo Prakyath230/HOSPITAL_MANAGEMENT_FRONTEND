@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 export interface CartItem {
-  id: string;
+  medicineId: number;
   name: string;
   price: number;
   image: string;
@@ -11,62 +12,67 @@ export interface CartItem {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private key = 'cart';
-  private items: CartItem[] = this.load();
-  private items$ = new BehaviorSubject<CartItem[]>(this.items);
+  private baseUrl = '/api/cart';
+  private items$ = new BehaviorSubject<CartItem[]>([]);
+  private count$ = new BehaviorSubject<number>(0);
+  private total$ = new BehaviorSubject<number>(0);
 
   cart$ = this.items$.asObservable();
-  count$ = new BehaviorSubject<number>(this.count());
-  total$ = new BehaviorSubject<number>(this.total());
+  countObs$ = this.count$.asObservable();
+  total$Obs = this.total$.asObservable();
 
-  add(item: Omit<CartItem, 'qty'>, qty: number = 1) {
-    const i = this.items.findIndex(x => x.id === item.id);
-    if (i >= 0) {
-      this.items[i].qty += qty;
-    } else {
-      this.items.push({ ...item, qty });
+  constructor(private http: HttpClient) {
+    this.loadCart();
+  }
+
+  private loadCart() {
+  this.http.get<any[]>(this.baseUrl).subscribe(items => {
+    const cartItems: CartItem[] = items.map(json => ({
+      medicineId: json.medicineId,
+      name: json.name,
+      image: json.imageUrl,
+      qty: json.units,
+      price: json.totalPrice / json.units
+    }));
+    this.items$.next(cartItems);
+    this.count$.next(this.count(cartItems));
+    this.total$.next(this.total(cartItems));
+  });
+}
+
+
+
+  add(medicineId: number, units: number = 1) {
+    const params = new HttpParams().set('units', units.toString());
+    this.http.post(this.baseUrl + `/medicine/${medicineId}`, {}, { params })
+      .subscribe(() => this.loadCart());
+  }
+
+  setQty(medicineId: number, qty: number) {
+    if (qty <= 0) {
+      this.remove(medicineId);
+      return;
     }
-    this.sync();
+    const params = new HttpParams().set('units', qty.toString());
+    this.http.put(this.baseUrl + `/medicine/${medicineId}`, {}, { params })
+      .subscribe(() => this.loadCart());
   }
 
-  setQty(id: string, qty: number) {
-    const it = this.items.find(x => x.id === id);
-    if (!it) return;
-    it.qty = Math.max(0, qty);
-    if (it.qty === 0) this.items = this.items.filter(x => x.id !== id);
-    this.sync();
-  }
-
-  remove(id: string) {
-    this.items = this.items.filter(x => x.id !== id);
-    this.sync();
+  remove(medicineId: number) {
+    this.http.delete(this.baseUrl + `/medicine/${medicineId}`)
+      .subscribe(() => this.loadCart());
   }
 
   clear() {
-    this.items = [];
-    this.sync();
+    this.http.delete(this.baseUrl)
+      .subscribe(() => this.loadCart());
   }
 
-  private sync() {
-    localStorage.setItem(this.key, JSON.stringify(this.items));
-    this.items$.next([...this.items]);
-    this.count$.next(this.count());
-    this.total$.next(this.total());
+  private count(items: CartItem[]): number {
+    return items.reduce((s, x) => s + x.qty, 0);
   }
 
-  private load(): CartItem[] {
-    try {
-      return JSON.parse(localStorage.getItem(this.key) || '[]');
-    } catch {
-      return [];
-    }
-  }
-
-  private count(): number {
-    return this.items.reduce((s, x) => s + x.qty, 0);
-  }
-
-  private total(): number {
-    return this.items.reduce((s, x) => s + x.qty * x.price, 0);
+  private total(items: CartItem[]): number {
+    return items.reduce((s, x) => s + x.qty * x.price, 0);
   }
 }

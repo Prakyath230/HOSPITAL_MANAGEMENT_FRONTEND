@@ -1,0 +1,126 @@
+/* ============================
+   Sidebar Container
+============================ */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  background: #1a1a2e; /* solid dark blue */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 15px; /* reduced padding */
+  font-family: "Segoe UI", Roboto, sans-serif;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+}
+
+/* ============================
+   Sidebar Header
+============================ */
+.sidebar h2 {
+  margin: 0 0 15px 0; /* reduced bottom margin */
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: #00d9b8; /* teal accent */
+  letter-spacing: 0.5px;
+}
+
+/* ============================
+   Menu List
+============================ */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.sidebar li {
+  margin-bottom: 8px; /* reduced spacing between items */
+}
+
+/* ============================
+   Menu Links
+============================ */
+.sidebar a {
+  color: #bbb;
+  text-decoration: none;
+  display: block;
+  padding: 8px 12px; /* reduced vertical and horizontal padding */
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+/* Hover & Active */
+.sidebar a:hover,
+.sidebar a.active {
+  background: #00d9b8; /* teal highlight */
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ============================
+   Logout Button (Special)
+============================ */
+.sidebar li:last-child a {
+  background: #ff4d4d;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 15px; /* slightly reduced */
+}
+
+.sidebar li:last-child a:hover {
+  background: #e60000;
+}
+
+/* ============================
+   Main Content
+============================ */
+.main-content {
+  margin-left: 220px;
+  padding: 20px;
+  background: #f8f9fb;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+  flex: 1;
+}
+
+/* ============================
+   Responsive
+============================ */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+    padding: 12px 8px; /* slightly tighter for mobile */
+    align-items: center;
+  }
+
+  .sidebar h2 {
+    display: none;
+  }
+
+  .sidebar a {
+    text-align: center;
+    padding: 8px;
+    font-size: 0;
+  }
+
+  .sidebar a::before {
+    display: none;
+  }
+
+  .sidebar li:last-child a {
+    margin-top: auto;
+  }
+
+  .content {
+    margin-left: 70px;
+  }
+}

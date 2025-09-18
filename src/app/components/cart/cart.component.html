@@ -1,56 +1,49 @@
+<app-navbar></app-navbar>
+
 <div class="cart-wrap" *ngIf="items.length; else empty">
   <h2>Your Cart</h2>
-
-  <table class="cart">
+  <table>
     <thead>
       <tr>
-        <th>Item</th>
+        <th>Image</th>
+        <th>Name</th>
         <th>Price</th>
         <th>Qty</th>
         <th>Subtotal</th>
-        <th></th>
+        <th>Action</th>
       </tr>
     </thead>
-
     <tbody>
-      <tr *ngFor="let it of items">
-        <td class="item">
-          <img [src]="it.image" alt="{{ it.name }}" />
-          <div class="name">{{ it.name }}</div>
+      <tr *ngFor="let item of items">
+        <td data-label="Image">
+          <img [src]="item.image" [alt]="item.name" width="60">
         </td>
-        <td>₹{{ it.price }}</td>
-        <td class="qty">
-          <button type="button" (click)="dec(it)">−</button>
-          <input
-            type="number"
-            min="1"
-            [ngModel]="it.qty"
-            (ngModelChange)="cartService.setQty(it.id, $event)"
-          />
-          <button type="button" (click)="inc(it)">+</button>
+        <td data-label="Name">{{ item.name }}</td>
+        <td data-label="Price">₹{{ item.price }}</td>
+        <td data-label="Qty">
+          <div class="qty-controls">
+            <button (click)="dec(item)">-</button>
+            <span>{{ item.qty }}</span>
+            <button (click)="inc(item)">+</button>
+          </div>
         </td>
-        <td>₹{{ it.price * it.qty }}</td>
-        <td>
-          <button type="button" class="link" (click)="remove(it)">Remove</button>
+        <td data-label="Subtotal">₹{{ item.price * item.qty }}</td>
+        <td data-label="Action">
+          <button class="remove-btn" (click)="remove(item)">Remove</button>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <div class="summary">
-    <div class="total">Total: ₹{{ total }}</div>
-    <div class="actions">
-      <a routerLink="/medicine">← Continue shopping</a>
-      <button type="button" (click)="buyNow()">Buy Now</button>
-      <button type="button" class="muted" (click)="clear()">Clear Cart</button>
+  <div class="cart-footer">
+    <h3>Total: ₹{{ total }}</h3>
+    <div>
+      <button class="clear-btn" (click)="clear()">Clear Cart</button>
+      <button class="buy-btn" (click)="buyNow()">Buy Now</button>
     </div>
   </div>
 </div>
 
 <ng-template #empty>
-  <div class="empty">
-    <p>Your cart is empty.</p>
-    <a routerLink="/medicine">Go to medicines</a>
-  </div>
+  <p class="empty-cart">Your cart is empty.</p>
 </ng-template>
-<app-navbar></app-navbar>

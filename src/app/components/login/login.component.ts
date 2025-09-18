@@ -53,33 +53,34 @@ export class LoginComponent {
     });
   }
 
-  login() {
-    const logUser = {
-      userName: this.logName,
-      password: this.logPassword
-    };
+login() {
+  const logUser = {
+    userName: this.logName,
+    password: this.logPassword
+  };
 
-    this.authService.login(logUser).subscribe({
-      next: (res: any) => {
-        // Ensure correct JWT field from backend is stored
-        const token = res.token || res.jwt; 
-        if (!token) {
-          alert('Login failed: no token received');
-          return;
-        }
-
-        localStorage.setItem('token', token);
-        localStorage.setItem('role', res.role || 'USER');
-
-        if (res.role === 'ADMIN') {
-          this.router.navigate(['/admin/dashboard']);
-        } else {
-          this.router.navigate(['home']);
-        }
-      },
-      error: (err) => {
-        alert(err.error?.message || 'Login failed');
+  this.authService.login(logUser).subscribe({
+    next: (res: any) => {
+      const token = res.token || res.jwt;
+      if (!token) {
+        alert('Login failed: no token received');
+        return;
       }
-    });
-  }
+
+      const role = (res.role || 'USER').toUpperCase();
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+
+      // Redirect admin to appointments page
+      if (role === 'ADMIN') {
+        this.router.navigate(['/admin/appointments']);
+      } else {
+        this.router.navigate(['/home']);
+      }
+    },
+    error: (err) => {
+      alert(err.error?.message || 'Login failed');
+    }
+  });
+}
 }

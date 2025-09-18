@@ -1,1 +1,28 @@
-<p>appointments works!</p>
+<div class = "appointments">
+<h2>Appointments Management</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Patient</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let app of appointments">
+      <td>{{ app.appointmentId }}</td>
+      <td>{{ app.patientName }}</td>
+      <td>{{ app.day }}</td>
+      <td>{{ app.time }}</td>
+      <td>{{ app.appointmentStatus }}</td>
+      <td>
+        <button (click)="approve(app.appointmentId)" [disabled]="app.appointmentStatus === 'APPROVED'">Approve</button>
+        <button (click)="reject(app.appointmentId)" [disabled]="app.appointmentStatus === 'REJECTED'">Reject</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

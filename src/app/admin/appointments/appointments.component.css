@@ -1,0 +1,73 @@
+/* Appointments full-page layout */
+.appointments {
+  padding: 40px;
+  min-height: 100vh;
+  background: #f4f6f9;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Heading */
+.appointments h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Table styling */
+.appointments table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.appointments thead {
+  background: #f0f0f0;
+}
+
+.appointments th,
+.appointments td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.appointments tbody tr:hover {
+  background: #fafafa;
+}
+
+/* Buttons */
+.appointments button {
+  margin-right: 8px;
+  padding: 6px 10px;
+  border: none;
+  background: green;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.appointments button:last-child {
+  background: red;
+}
+
+
+.appointments button:disabled {
+  background: #aaa;
+  cursor: default;
+}
+
+.appointments button:disabled:hover {
+  background: #aaa;
+  cursor: default;
+}
